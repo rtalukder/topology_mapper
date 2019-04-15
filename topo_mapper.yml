@@ -1,0 +1,26 @@
+---
+- hosts: ios_devices
+  gather_facts: yes
+  connection: local
+
+  tasks:
+    - name: Run 'show mac address-table'
+      ios_command:
+        commands:
+          - show mac address-table
+      register: mac_output
+    - debug: var=mac_output.stdout_lines
+
+    - name: Save 'show mac address-table' output to a file
+      local_action: copy content="{{ mac_output.stdout }}" dest="/root/ios_output/mac_output.{{ inventory_hostname }}.txt"
+
+    - name: Run 'show ip arp'
+      ios_command:
+        commands:
+          - show ip arp
+      register: arp_output
+    - debug: var=arp_output.stdout_lines
+
+    - name: Save 'show ip arp' output to a file
+      local_action: copy content="{{ arp_output.stdout }}" dest="/root/ios_output/arp_output.{{ inventory_hostname }}.txt"
+
