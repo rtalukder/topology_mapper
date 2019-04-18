@@ -16,10 +16,13 @@
         dest: /root/topology_mapper/
 
     - name: Create directories needed for topology_mapper script                                               
-      file: path="/root/topology_mapper/{{ item }}" state=directory owner=root group=root mode=0755
+      file: path="/root/topology_mapper/{{ inventory_hostname }}" state=directory owner=root group=root mode=0755
+
+    - name: Create directories needed for topology_mapper script                                               
+      file: path="/root/topology_mapper/{{ inventory_hostname }}/{{ item }}" state=directory owner=root group=root mode=0755
       with_items:
         - ios_output
-        - data
+        - formatted_data
         - rarp_output
 
     - name: Run 'show mac address-table'
@@ -30,7 +33,7 @@
     - debug: var=mac_output.stdout_lines
 
     - name: Save 'show mac address-table' output to a file
-      local_action: copy content="{{ mac_output.stdout }}" dest="/root/topology_mapper/ios_output/mac_output.{{ inventory_hostname }}.txt"
+      local_action: copy content="{{ mac_output.stdout }}" dest="/root/topology_mapper/{{ inventory_hostname }}/ios_output/mac_output.{{ inventory_hostname }}.txt"
       register: mac_file
     - debug: var=mac_file.dest
 
@@ -42,9 +45,9 @@
     - debug: var=arp_output.stdout_lines
 
     - name: Save 'show ip arp' output to a file
-      local_action: copy content="{{ arp_output.stdout }}" dest="/root/topology_mapper/ios_output/arp_output.{{ inventory_hostname }}.txt"
+      local_action: copy content="{{ arp_output.stdout }}" dest="/root/topology_mapper/{{ inventory_hostname }}/ios_output/arp_output.{{ inventory_hostname }}.txt"
       register: arp_file
     - debug: var=arp_file.dest
 
     - name: Run topology_mapper script
-      local_action: shell python3 topology_mapper/file_parser.py "{{ arp_file.dest }} "{{ mac_file }}""
+      local_action: raw python3 /root/topology_mapper/file_parser.py "{{ arp_file.dest }}" "{{ mac_file.dest }}"

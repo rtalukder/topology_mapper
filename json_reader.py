@@ -5,7 +5,7 @@ import time
 import json
 
 def reverse_arp(arp_json_file, mac_json_file, hostname):
-	rarp_dir = "rarp_output/rarp_search"
+	rarp_dir = "/root/topology_mapper/" + hostname + "/rarp_output/rarp_search/"
 	rarp_file_writer_name = rarp_dir + "." + hostname + "." + time_return() + ".json"
 
 
@@ -40,11 +40,11 @@ def mac_first_six(mac_addr):
 	return mac_addr_first_six
 
 def time_return():
-	timestr = time.strftime("%Y%m%d-%H%M")
+	timestr = time.strftime("%m%d%Y-%H:%M")
 	return timestr
 
 def OUI_finder(mac_addr):
-	mac_json_file = open('mac_to_vendor.json', 'r', encoding="utf8")
+	mac_json_file = open('/root/topology_mapper/mac_to_vendor.json', 'r', encoding="utf8")
 
 	mac_addr_json = json.load(mac_json_file)
 
