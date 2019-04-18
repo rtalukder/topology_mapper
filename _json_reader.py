@@ -11,7 +11,7 @@ def reverse_arp(arp_json_file, mac_json_file, hostname):
 
 	arp_json = open(arp_json_file, 'r', encoding="utf8")
 	mac_json = open(mac_json_file, 'r', encoding="utf8")
-	rarp_file = open(rarp_file_writer_name, 'w+', encoding="utf8")
+	rarp_file = open(rarp_file_writer_name, 'w', encoding="utf8")
 
 	arp_json_data = json.load(arp_json)
 	mac_json_data = json.load(mac_json)

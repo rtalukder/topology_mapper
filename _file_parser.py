@@ -40,7 +40,7 @@ def mac_parser(filename):
 	mac_file_writer_name = data_dir + "." + hostname + "." + time_return() + ".json"
 
 	mac_reader = open(mac_file_reader_name, 'r')
-	mac_writer = open(mac_file_writer_name, 'w+', encoding="utf8")
+	mac_writer = open(mac_file_writer_name, 'w', encoding="utf8")
 
 	for i in mac_reader:
 		mylist = (i.split('\\n'))
@@ -74,7 +74,7 @@ def arp_parser(filename):
 	arp_file_writer_name = data_dir + "." + hostname + "." + time_return() + ".json"
 
 	arp_reader = open(arp_file_reader_name, 'r')
-	arp_writer = open(arp_file_writer_name, 'w+', encoding="utf8")
+	arp_writer = open(arp_file_writer_name, 'w', encoding="utf8")
 
 	for i in arp_reader:
 		mylist = (i.split('\\n'))
