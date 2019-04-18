@@ -52,6 +52,7 @@ def arp_parser(filename, arp_hostname):
 	last_index = (mylist[-1])
 	mystr = last_index[:-2]
 	info_tuple = (mystr.split())
+	arp_list.append(dict(zip(keys, info_tuple)))
 
 	# pretty printing
 	arp_writer.write(json.dumps(arp_list, sort_keys=True, indent=4, separators=(',', ': ')))

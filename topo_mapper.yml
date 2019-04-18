@@ -14,6 +14,9 @@
       git:
         repo: https://github.com/rtalukder/topology_mapper.git
         dest: /root/topology_mapper/
+        clone: no
+        update: yes
+
 
     - name: Create directories needed for topology_mapper script                                               
       file: path="/root/topology_mapper/{{ inventory_hostname }}" state=directory owner=root group=root mode=0755
