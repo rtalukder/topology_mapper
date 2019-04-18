@@ -30,17 +30,17 @@ def args():
 def mac_parser(filename):
 	ios_dir = "ios_output/mac_output"
 	data_dir = "data/formatted_macs"
-	keys = ['Vlan', 'Mac Address', 'Type', 'Ports']
+	keys = ["Vlan", "Mac Address", "Type", "Ports"]
 	mac_list = []
 	vlan_line = 0
 
 	(file_type, hostname, file_extension) = filename.split('.')
 
 	mac_file_reader_name = ios_dir + "." + hostname + "." + file_extension
-	mac_file_writer_name = data_dir + "." + hostname + "." + time_return() + "." + file_extension
+	mac_file_writer_name = data_dir + "." + hostname + "." + time_return() + ".json"
 
 	mac_reader = open(mac_file_reader_name, 'r')
-	mac_writer = open(mac_file_writer_name, 'w')
+	mac_writer = open(mac_file_writer_name, 'w', encoding="utf8")
 
 	for i in mac_reader:
 		mylist = (i.split('\\n'))
@@ -65,16 +65,16 @@ def mac_parser(filename):
 def arp_parser(filename):
 	ios_dir = "ios_output/arp_output"
 	data_dir = "data/formatted_arps"
-	keys = ['Protocol', 'Address', 'Age(min)', 'Hardware Addr', 'Type', 'Interface']
+	keys = ["Protocol", "Address", "Age(min)", "Hardware Addr", "Type", "Interface"]
 	arp_list = []
 
 	(file_type, hostname, file_extension) = filename.split('.')
 
 	arp_file_reader_name = ios_dir + "." + hostname + "." + file_extension
-	arp_file_writer_name = data_dir + "." + hostname + "." + time_return() + "." + file_extension
+	arp_file_writer_name = data_dir + "." + hostname + "." + time_return() + ".json"
 
 	arp_reader = open(arp_file_reader_name, 'r')
-	arp_writer = open(arp_file_writer_name, 'w')
+	arp_writer = open(arp_file_writer_name, 'w', encoding="utf8")
 
 	for i in arp_reader:
 		mylist = (i.split('\\n'))
@@ -94,7 +94,7 @@ def arp_parser(filename):
 	# close out files
 	arp_reader.close()
 	arp_writer.close()
-	
+
 	return arp_file_writer_name
 
 def get_hostname(filename):
