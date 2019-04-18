@@ -1,13 +1,43 @@
+# Raquib Talukder
+# Reverse ARP
+
 import json
-from pprint import pprint
 
-myfile = open('mac_to_vendor.json', 'r', encoding="utf8")
+def reverse_arp(arp_json_file, mac_json_file, hostname):
+	arp_json = open(arp_json_file, 'r', encoding="utf8")
+	mac_json = open(mac_json_file, 'r', encoding="utf8")
 
-data = json.load(myfile)
+	arp_json_data = json.load(arp_json)
+	mac_json_data = json.load(mac_json)
 
-example="6805CA"
+	keys = ['IP Addr', 'Mac Addr', 'Port', 'Vendor', 'VLAN', 'Age(min)']
+	successful_rarp = []
 
-for i in range(len(data)):
-	if (data[i]['mac'] == example):
-		print(data[i]['vendor'])
+	for i in arp_json_data:
+		arp_json_item = i
+		matched_mac = [mac_json_item for mac_json_item in mac_json_data if mac_json_item['Mac Address'] == arp_json_item['Hardware Addr']]
+		
+		if len(matched_mac) > 0:
+			vendor = OUI_finder(mac_first_six(matched_mac[0]['Mac Address']))
+			values = [arp_json_item['Address'], arp_json_item['Hardware Addr'], matched_mac[0]['Ports'],
+						 vendor, matched_mac[0]['Vlan'], arp_json_item['Age(min)'] ]
+			successful_rarp.append(dict(zip(keys, values)))
 	
+	print("\n    !--- RARP for: " + hostname + " ---!")
+	print(json.dumps(successful_rarp, sort_keys=True, indent=4, separators=(',', ': ')))
+
+def mac_first_six(mac_addr):
+	modified_mac_addr = mac_addr.replace(".", "")
+	mac_addr_first_six = modified_mac_addr[:6]
+
+	return mac_addr_first_six
+
+def OUI_finder(mac_addr):
+	mac_json_file = open('mac_to_vendor.json', 'r', encoding="utf8")
+
+	mac_addr_json = json.load(mac_json_file)
+
+	for mac_addr_item in mac_addr_json:
+		if (mac_addr_item['mac'] == mac_addr):
+			return (mac_addr_item['vendor'])
+
