@@ -5,7 +5,7 @@ import time
 import json
 
 def reverse_arp(arp_json_file, mac_json_file, hostname):
-	rarp_dir = "/root/topology_mapper/" + hostname + "/rarp_output/rarp_search/"
+	rarp_dir = "/root/topology_mapper/" + hostname + "/rarp_output/rarp_search"
 	rarp_file_writer_name = rarp_dir + "." + hostname + "." + time_return() + ".json"
 
 
