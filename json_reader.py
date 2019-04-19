@@ -40,7 +40,7 @@ def mac_first_six(mac_addr):
 	return mac_addr_first_six
 
 def time_return():
-	timestr = time.strftime("%m%d%Y-%H:%M")
+	timestr = time.strftime("%m%d%Y-%H:%M:%S")
 	return timestr
 
 def OUI_finder(mac_addr):

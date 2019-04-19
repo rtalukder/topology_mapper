@@ -103,7 +103,7 @@ def get_hostname(filename):
 	return hostname
 
 def time_return():
-	timestr = time.strftime("%m%d%Y-%H:%M")
+	timestr = time.strftime("%m%d%Y-%H:%M:%S")
 	return timestr
 
 if __name__ == "__main__":
